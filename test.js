@@ -415,7 +415,193 @@ const logValues = obj =>{
 console.log(logValues({id: 1, name: "Vitalik",  country: "Canada"}))
 
 
+//const html = <ul>      ${users.map(user =>        <li>${user.name}</li>      ).join("")}              </ul>
+//console.log(html) // "<ul> <li>Nick Szabo</li><li>Gavin Wood</li> </ul>"
 
+const currencies = ["Bitcoin", "Ethereum", "Tether", "Solana"]
+function getDropdown(curs) {
+    let html = <option value="">Выберите валюту</option> \n;
+    currencies.forEach(function (cur) {
+      html += <option value="${cur.toLowerCase()}">${cur}</option> \n;
+    });
+    return html;
+}
+console.log(getDropdown(currencies))
+
+const data = [3,56,5,3]
+
+rabota_map = data.map(el => el*2).join(" ")
+console.log(rabota_map)
+
+                                                        //ПРАКТИКА 72  
+//   TIP HOW TO USE .MAP()  const html = <tr>\n<td>${rows.map(row => <td>${row[0]}</td>\n <td>${row[1]}</td>\n`).join("")}\n</tr> `
+
+const currencies = ["Bitcoin", "Ethereum", "Tether", "Solana"]
+const newCur = currencies.map(currency => <option value="${currency.toLowerCase()}">${currency}</option>).join("")
+const renderTableRows = currencies => {
+    return <option value="">Выберите валюту</option>${newCur}
+}
+console.log(renderTableRows(currencies))
+
+                                                      //  .EVERY() // .SOME()
+const temps = [7,-3,15]
+console.log(temps.every(temp => temp < 16))
+console.log(temps.some(temp => temp >= 15))
+//Напишите функцию needOtrabotka, чтобы она возвращала true, если хотя бы одна из оценок ниже трех.
+const needOtrabotka = temps =>{
+    return temps.some(temp => temp < 3)
+}
+console.log(needOtrabotka(temps))
+//                                               ОЧИСТКА МАССИВА И МЕТОД .SPLICE()  
+const scam = ["$ADA", "$XRP", "$EOS"]
+scam.length = 0 //
+console.log(scam)
+
+const tokens = ["$UNI", "$LINK", "$DAI"]
+const first = tokens.splice(1,2)
+console.log(first,tokens)
+
+//Напишите функцию resetUser, чтобы она обнуляла массив ролей пользователя чата.
+const user = ["Admin", "Moderator"]
+const resetUser = user =>{
+    user.length = 0
+}
+resetUser(scam)
+console.log(scam)
+
+//Напишите функцию demoteUser, чтобы она удаляла первый элемент в массиве ролей, который всегда предполагает больше власти, чем следующий за ним. 
+//Функция должна возвращать новую редакцию массива, не содержащую удаленную роль.
+const userRole = ["Admin", "Moderator", "Editor"]
+const demoteUser =  userRole =>{
+    userRole.splice(0,1)
+}
+console.log(userRole)
+// Task 77: deleting all objects from second and return array with only first element 
+
+const getfirst = userRole =>{
+    userRole.splice(1)
+}
+getfirst(userRole)
+console.log(userRole)
+
+
+//                                                 .REDUCE(ACC,CUR)
+
+const nums = [23,3,34,34,3,2,-1]
+nums.reduce((arr,cur)=>{
+    return arr*cur
+},1)
+console.log(nums)
+
+let punks = [3100, 7804, 5217, 8857]
+const sum = punks.reduce((arr,cur)=>{
+    return arr+cur
+},0)
+console.log(sum)
+
+const Punks = [3100, 7804, 5217, 8857]
+const sumPunks = Punks =>{
+    return Punks.reduce((arr,cur)=>{
+        return arr+cur
+    },0)
+}
+console.log(sumPunks(Punks))
+//                                        ДЕСТРУКТУРИЗАЦИЯ МАССИВОВ
+
+const blockr = [13335416, 355]
+
+const [blockHeight, totalTxs] = blockr
+console.log(totalTxs)
+
+//Напишите функцию getBlockReport, которая будет деструктурировать переменные blockHeight и totalTxs из параметра block.
+const block = [9585604, 110]
+const getBlockReport = block =>{
+    const [blockHeight,totalTxs] = block
+    return Блок номер ${blockHeight} содержит ${totalTxs} транзакций
+}
+console.log(getBlockReport(block))
+//                                     КОНКАТЕНАЦИЯ МАССИВОВ
+
+const sizes = [9.5,8,10,5]
+const names = ["de la soul", "sean wotherspoon"]
+
+const spred = (sizes,names)=>{
+    return [...sizes, ...names]
+}
+console.log(spred(sizes,names))
+
+//                                         РАБОТА С ОБЬЕКТАМИ 
+//                                       ДИНАМИЧЕСКИЕ СВОЙСТВА
+const Savva = {
+    id: 777,
+    name: "slava bebra",
+    age: 18
+}
+const key = "id"
+console.log(Savva[key])
+//имя свойства находится в переменной
+const GetObj = (user,key) =>{
+    return user[key]
+}
+console.log(GetObj(Savva,"name"))
+
+//         object.keys(x)
+
+
+const settings = {
+    theme: "dark",
+    version: "2.4.1",
+    beta: false
+}
+const keys = Object.keys(settings); console.log(keys)
+keys.forEach(key =>{
+    console.log(settings[key]) 
+})
+//Напишите функцию getObjectDetails, принимающую объект obj и имя ключа key, чтобы она возвращала строку 
+//«Значением ключа X является Y», где X — имя ключа, передаваемого в параметре key, а Y – его значение.
+const getObjectDetails = (obj,key) =>{
+    return Значением ключа ${key} является ${obj[key]} 
+}
+console.log(getObjectDetails({id: 1, name: "Vitalik"},"name"))
+
+// Напишите функцию getNumberOfKeys, чтобы она возвращала количество ключей полученного объекта obj
+const getNumberOfKeys = obj =>{
+    return Object.keys(obj).length
+}
+console.log(getNumberOfKeys({id: 1, name: "Savva", country: "canada"}))
+
+//Напишите функцию getCapsKeys, 
+// чтобы она возвращала массив, состоящий из названий всех ключей объекта obj, написанных капсом.
+
+const getCapsKeys = obj =>{
+    const keys = Object.keys(obj)
+    return keys.map(key => key.toUpperCase())
+     
+}
+console.log(getCapsKeys({id: 1, name: "Savva", country: "canada"}))
+
+const prices = {
+    ethereum: {
+      usd: 3382,
+      eur: 2916,
+      rub: 246392
+    }
+  }
+const key = "ethereum"
+// const eth = prices[key]
+const rates = Object.keys(prices[key])
+console.log(prices.ethereum)
+
+
+const settings = {
+    theme: "dark",
+    version: "2.4.1",
+    beta: false
+}
+const keys = Object.keys(settings); console.log(keys)
+keys.forEach(key =>{
+    console.log(settings[key]) 
+})
 
 
 
@@ -436,7 +622,7 @@ const getPrice = obj =>{
     })
 
 }
-console.log(getPrice(prices))*/
+console.log(getPrice(prices))
 
 //                                                           OBJECT.VALUES() OBJECT.ENTRIES()
 const phone = {
@@ -460,4 +646,5 @@ console.log(getCapsValues({body: "Lab Coat"}))
 const logEntries = obj =>{
     console.log(Object.entries(obj))
 }
-console.log(logEntries({body: "Kimono Orange", head: "Backwards Hat Red"}))
+console.log(logEntries({body: "Kimono Orange", head: "Backwards Hat Red"}))*/
+
