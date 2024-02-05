@@ -646,5 +646,144 @@ console.log(getCapsValues({body: "Lab Coat"}))
 const logEntries = obj =>{
     console.log(Object.entries(obj))
 }
-console.log(logEntries({body: "Kimono Orange", head: "Backwards Hat Red"}))*/
+console.log(logEntries({body: "Kimono Orange", head: "Backwards Hat Red"}))
 
+
+// Деструктуризация объектов
+
+const config = {
+  id: 1,
+  isAdmin: false,
+  theme: {
+    dark: true,
+    zoom: false
+  }
+}
+
+const {id,isAdmin = 0, theme} = config
+console.log(id,isAdmin)
+
+// occurence when name of object is similar to another object
+
+const type = "USB C"
+
+const user ={
+    address: "0x",
+    type: "contract" 
+}
+const {address, type: addressType} = user
+console.log(addressType)
+
+//  конкатенация обьектов
+const userSOL ={
+    address: "0x",
+    type: "contract" 
+}
+const userBTC= {
+    type: "illigible",
+    date: "2020"
+}
+
+const solBTC = {...userSOL, ...userBTC}
+console.log(solBTC)
+
+// PRATICE 94 | Напишите функцию joinLoot, чтобы она возвращала объект, являющийся суммой объектов rare и common. 
+// Если артефакт присутствует в rare, то он должен заменять значение этой «шмотки» из common. 
+const rare = {
+    head: "Ornate Helm of Rage"
+}
+
+const common = {
+    head: "Linen Hood",
+    chest: "Chain Mail",
+    weapon: "Grave Wand"
+}
+
+const joinLoot = (rare,common) =>{
+    return {...common, ...rare}
+}
+console.log(joinLoot(rare,common)) 
+// Practice 95 | Напишите функцию getRarityScore, чтобы она деструктурировала объект loot на две переменных: bag и score.
+const getRarityScore = loot =>{
+    const {bag,score} = loot
+    return `Мешок #${bag} имеет ${score} очков редкости.`
+}
+console.log(getRarityScore({bag: 767,score: 15.2 }))
+
+const getRarityScoreRank = (loot) => {
+    const {bag,score,rank = 0} = loot
+    return `Мешок #${bag} имеет ${score} очков редкости и занимает ${rank} место в рейтинге.`
+  }
+  console.log(getRarityScoreRank({bag: 6189, score: 164.41}))
+
+
+
+//                                               Опциональная цепочка I
+const dao = {
+    members: {
+        founder: {
+            address: "0xife" 
+        }
+    }
+}
+
+let address = undefined
+
+if (dao.members && dao.members.founder && dao.members.founder.address) // пример обращения к обьектам по очереди проверяя наличие каждого
+{
+  address = dao.members.founder.address
+}
+
+let optL = dao.members?.founder?.address // пример использования опциональной цепочки
+
+console.log(optL)
+
+// практика 97  Напишите функцию getBalance, чтобы она возвращала баланс кошелька в сети Ethereum. 
+// В случае, если такое свойство не будет найдено, функция должна возвращать undefined.
+const wallet ={
+    etherium:{
+        balane: "0,2",
+        address: "0xc"
+    }
+}
+const getBalance = obj =>{
+    return obj.etherium?.balance
+}
+
+console.log(getBalance(wallet))
+//                                          Опциональная цепочка II(для массивов и функций)
+
+const data = {
+    gasFf: [2,4,4,3],
+    status: "ready for trans"
+}
+
+const alert = data.status?.substring(0,5) //функция 
+const firstGAS = data.gasF?.[0] // array
+if(firstGAS){
+    console.log(alert)
+
+}
+
+// Напишите функцию getBalance, чтобы она возвращала баланс кошелька в сети Ethereum в верхнем регистре. 
+// В случае, если такое свойство не будет найдено, функция должна возвращать undefined.
+const wallet ={
+    etherium:{
+        balanc: "245 eth"
+    }
+}
+const getBalance = wallet =>{
+    return wallet.etherium?.balance?.toUpperCase().substring(0,4) // возвращает undefined
+}
+console.log(getBalance(wallet))*/
+
+//                                                   Нулевое слияние I(возвращает правое значение если слева undefined)
+// Напишите функцию getBalance, чтобы она возвращала свойство balance из переданного ей объекта address. 
+// В случае, если такое свойство не задано, функция должна возвращать строку "N/A".
+const address = {
+    balane: 42
+}
+const getBalance = address =>{
+    return address.balance ?? "N/A"
+}
+console.log(getBalance(address))
