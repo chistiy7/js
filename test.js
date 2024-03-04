@@ -775,15 +775,244 @@ const wallet ={
 const getBalance = wallet =>{
     return wallet.etherium?.balance?.toUpperCase().substring(0,4) // возвращает undefined
 }
-console.log(getBalance(wallet))*/
+console.log(getBalance(wallet))
 
 //                                                   Нулевое слияние I(возвращает правое значение если слева undefined)
 // Напишите функцию getBalance, чтобы она возвращала свойство balance из переданного ей объекта address. 
 // В случае, если такое свойство не задано, функция должна возвращать строку "N/A".
+
 const address = {
-    balane: 42
+    balance: 42
 }
 const getBalance = address =>{
     return address.balance ?? "N/A"
 }
 console.log(getBalance(address))
+
+const getGreeting = user => {
+    return `Привет ,${user.name ?? "аноним"}`
+  }
+console.log(getGreeting({name: "ВИТАЛИК"}))
+
+// PRACTICE 103
+
+
+const prices = {
+    ethereum: {
+        usd: 3382,
+        eur: 2916,
+        rub: 246392
+    },
+    Bcd:{
+        usd: 3382,
+        eur: 2916,
+        rub: 246392
+    }
+  };
+
+const getPrice = (currency,name) => {
+    const key = Object.keys(prices) // ETH
+    console.log(b)
+    return (prices[key][currency] ?? `Нет ${name}`)
+
+};
+console.log(getPrice("rb","rbginu"))
+
+// Допишите функцию getChainId, чтобы она возвращала идентификатор сети, взятый из переданного ей объекта network. 
+// В противном случае должен возвращаться дефолтный идентификатор 0. Изучите примеры использования функции, чтобы понять структуру ожидаемого ею объекта.
+const network = {
+    info:{
+        chainI: 22342
+    }
+
+}
+const getChainId = network =>{            // ОПЦИОНАЛЬНАЯ ЦЕПОЧКА С НУЛЕВЫМ СЛИЯНИЕМ
+    return network.info?.chainID ?? 0
+}
+console.log(getChainId(network))
+
+const tx = {
+    details:{
+        values:{
+        }
+    }
+}
+
+const getxValue = tx => {
+    if (tx.details && tx.details.value && tx.details.value.eth) { // refactoring with usage of zero merge and optional list 
+      return tx.details.value.eth
+    }
+    return "N/A"
+  }
+
+const getTxValue = tx =>{
+    return tx.details?.values?.eth ?? "N/A"
+}
+console.log(getTxValue(tx))
+
+// Допишите функцию getNetworkName так, чтобы она возвращала название сети в нижнем регистре из переданного ей объекта, а в случае его отсутствия строку "network".
+const Oj ={
+    info:{
+        name: "Rinkeby"
+    }
+}
+const getNetworkName = network =>{
+    return network.info?.name.toLowerCase() ?? "network"
+}
+console.log(getNetworkName(Oj))
+
+
+//                                                                             Рефакторинг условий
+
+
+const getTxStatus = tx =>{
+    const messages ={
+        pending: "Ожидаем подтверждения от сети.",
+        confirmed: "Пробуем выполнить транзакцию",
+        canceled: "Не удалось выполнить транзакцию",
+        success:"Транзакция выполнена успешно!"
+    }
+    return messages[tx] ?? "Статус транзакции недоступен."
+} 
+console.log(getTxStatus("pending"))                      
+
+// ПРИВЕДЕНИЕ ТИПОВ
+
+const delta = 5-5
+const str = "fi"
+if(delta){
+    console.log("строка в условии")
+}
+
+
+//                                                                       Массивы объектов
+
+
+const assets = [
+    {
+      id: 1,
+      slug: "bitcoin",
+      symbol: "BTC",
+      creator: {
+        firstName: "Satoshi",
+        lastName: "Nakamoto",
+        avatarUrl: null
+      }
+    },
+    {
+      id: 2,
+      slug: "ethereum",
+      symbol: "ETH",
+      creator: {
+        firstName: "Vitalik",
+        lastName: "Buterin",
+        avatarUrl: "https://pbs.twimg.com/profile_images/977496875887558661/L86xyLF4_400x400.jpg"
+      }
+    }
+  ]
+
+
+
+
+// Допишите функцию logNames, чтобы она печатала в консоль имя и фамилию пользователя, отделенные пробелом.
+
+const sampleUsers = [{
+    id: 1,
+    firstName: "Satoshi",
+    lastName: "Nakamoto"
+}, {
+    id: 2,
+    firstName: "Vitalik",
+    lastName: "Buterin"
+}]
+
+const logNames = users => {
+    users.forEach(user => {
+      console.log(`${user.firstName} ${user.lastName}`)
+    })
+}
+console.log(logNames(sampleUsers))
+
+
+const block15034336 = [{
+    gasLimit: 120678,
+    gasUsed: 120678 
+  }, {
+    gasLimit: 48594,
+    gasUsed: 29328
+  }, {
+    gasLimit: 145026,
+    gasUsed: 96684
+  }]
+
+const GasUsed = block =>{
+    let sum = 0
+    block.forEach(obj => {
+        sum += obj.gasUsed
+    })
+    return sum
+}
+
+const AVG = block =>{  // среднее значение лимита газа
+    let sum = 0
+    let count = 0
+    block.forEach(obj => {
+        count += 1
+        sum += obj.gasLimit
+        
+    })
+    return sum / count
+}
+console.log(AVG(block15034336))
+
+
+
+const block15034523 = [{
+    gas: {
+      gasFees: {
+        gasPrice: 50.1,
+        feePaid: 2.52
+      },
+      gasLimit: 120000,
+      gasUsed: 41309
+    },
+    value: 0
+  }, {
+    gas: {
+      gasFees: {
+        gasPrice: 50.1,
+        feePaid: 1.28
+      },
+      gasLimit: 90000,
+      gasUsed: 21000
+    },
+    value: 98.21
+  }]
+
+const getGgetTotalFeesPaid = block =>{
+    let sum = 0
+    block.forEach(obj => {
+        sum += obj.gas?.gasFees?.feePaid
+    })
+    return sum
+}
+console.log(getGgetTotalFeesPaid(block15034523))
+
+//  Допишите функцию getDeposits, чтобы она возвращала массив размеров депозитов на основе принятого параметра stakers.
+
+
+const stakers = [{
+    entity: "Lido",
+    deposits: 4138464,
+    validators: 129327
+  }, {
+    entity: "Kraken",
+    deposits: 837184,
+    validators: 26162
+  }]
+
+const getDeposits = stakers =>{
+    return stakers.map(stake => stake.deposits)
+}
+console.log(getDeposits(stakers))  */
+
