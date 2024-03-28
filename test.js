@@ -1014,5 +1014,263 @@ const stakers = [{
 const getDeposits = stakers =>{
     return stakers.map(stake => stake.deposits)
 }
-console.log(getDeposits(stakers))  */
+console.log(getDeposits(stakers))  
 
+//                                             КЛАССЫ
+
+
+// Напишите функцию mintToken, которая должна возвращать новый экземпляр класса Token. 
+// Выберите любое значение supply, отвечающее за количество выпущенных токенов.
+class Token{
+    constructor(supply) {
+        this.supply = supply 
+    }
+}
+
+const MintToken = (bob) =>{
+    return new Token(bob)
+}
+console.log(MintToken(4567))
+
+// Создайте класс Account, который бы превращал параметры конструктора в три переменных экземпляра: address, balance и nonce.
+class Account{
+    constructor(address,balance,nonce) {
+        this.balance = balance
+        this.address = address
+        this.nonce = nonce
+    }
+}
+
+// Напишите класс Punk с двумя методами экземпляров:
+// 1) getId, который должен возвращать номер панка с приставкой #
+// 2) isAlien, который должен возвращать true, если переменная экземпляра type имеет значение "Alien"
+
+class Punk{
+    constructor(number,type) {
+        this.number = number
+        this.type = type
+    }
+    getId(){
+        return `#${this.number}`
+    } 
+    isAlien(){
+        return this.type === "Alien"
+    }
+}
+
+
+const punk3100 = new Punk(3100, "Alien")
+console.log(punk3100)
+// Напишите геттер для свойства todos класса Tasks. 
+// Геттер должен возвращать строку задач в формате CSV. То есть каждый таск должен быть отделен запятой и пробелом.
+
+class Tasks {
+    constructor(todos) {
+        this._todos = todos          
+    }
+    get todos(){
+        console.log("Сработал геттер todos")
+        return this._todos.join(", ")
+    }
+}
+const task = new Tasks(["Выспаться", "Попробовать Zwift"])
+console.log(task.todos)
+// Дополните класс Transaction геттером и сеттером, задающим внутреннюю переменную экземпляра _wei, хранящую сумму 
+// транзакции amount в деноминации wei (с 18 дополнительными нулями).
+
+class Transaction {
+    constructor(amount) {
+      this.amount = amount
+    }
+      
+    get amount() {
+      return this._wei
+    }
+      
+    set amount(value) {
+      this._wei = value * 1000000000000000000
+    }
+  } 
+const tx = new Transaction(1.5)
+console.log(tx.amount)
+
+// ЦЕПОЧКИ КЛАССОВ 
+
+class Course {
+    constructor(name, isCompleted) {
+      this.name = name
+      this.isCompleted = isCompleted
+    }
+    
+    markCompleted() {
+      this.isCompleted = true
+      return this // Доступен внутри цепочки
+    }
+  
+    setGrade(grade) {
+      this.grade = grade
+      return this // Доступен внутри цепочки
+    }
+  
+    getCertificate() {
+      this.issueCertificate = true
+      return this // Доступен внутри цепочки
+    }
+  }
+
+  const course = new Course("Solidity", true)
+  course.markCompleted().setGrade(5).getCertificate()
+  console.log(course)
+
+  class Halving {
+    constructor(totalSupply) {
+      this.totalSupply = totalSupply
+    }
+  
+    cutSupply() {
+        console.log("method started")
+        if (Halving.getVote()) {
+            this.totalSupply /= 2
+      }
+    }
+  
+    static getVote() {
+        console.log("method started")
+        return Math.random() <= 0.5 // Вероятность 50% на true
+    }
+  }
+  const halving = new Halving(100000)
+  halving.cutSupply
+
+  console.log(Halving.getVote(),halving.totalSupply)
+
+class TokeinSale {
+    constructor() {
+      this.amount = 1000
+      this.token = "CRV"
+      this.inWhitelist = false
+    }
+  
+    addToWhitelist() {
+        console.log("method started")
+      this.inWhitelist = true
+      this.amount *= 10
+      console.log(this.amount)
+      return this
+    }
+  
+    setToken(symbol) {
+        console.log("method started")
+      this.token = symbol
+      return this
+    }
+  
+    applyBoost(percent) {
+        console.log("method started")
+      this.amount += this.amount / 100 * percent
+      return this
+    }
+  }
+  const tokensale = new TokeinSale
+  tokensale.addToWhitelist().setToken("CVX").applyBoost(5)
+  console.log(tokensale.amount)
+//   Наследование классов
+class Member {
+    constructor(pseudonym, address) {
+      this.pseudonym = pseudonym
+      this.address = address
+    }
+  
+    getPseudonym() {
+      return this.pseudonym
+    }
+  
+    getAddress() {
+      return this.address
+    }
+}
+
+class Founder extends Member{
+    vote (){
+        console.log(`Your votes are applied`)
+    }
+}
+const founder = new Founder("wengalbi", "0x9ue838732ybh")
+const member = new Member("chistiy", "0x9u38732ybh")
+console.log(member.getAddress())
+
+class User {
+    constructor(balance, address) {
+        this.balance = balance
+        this.address = address
+    }
+    getBalance(){
+        return this.balance
+    }
+    getAddress(){
+        return this.address
+    }
+}
+
+class Owner extends User{
+    getBalance(){
+        return `${this.balance} [owner]`
+    }
+    withdrawEth(){
+        return "Transaction completed"
+    }
+}
+const user = new User(7.85, "shitty.eth")
+const owner = new Owner("zeneca.eth", 1.55)
+console.log()
+
+class VC {
+    constructor(company,amount) {
+        this.company = company
+        this.amount = amount
+    }
+    getDeal(){
+        return `${this.company} invited ${this.balance} millions $`
+    }
+
+}
+
+class Multicoin extends VC {
+
+}
+
+class Dragonfly extends VC {
+
+}
+
+*/
+class User {
+    constructor(address, balance) {
+      this.address = address
+      this.balance = balance
+    }
+  
+    getAddress() {
+      return this.address
+    }
+      
+    getBalance() {
+      return this.balance
+    }
+  }
+  
+  class Owner extends User {
+    constructor(address,balance,owner) {
+        super(address,balance)
+        this.owner = owner
+    }
+    getAddress() {
+      return `${this.address} ${[this.owner]}`
+    }
+      
+    withdrawEth() {
+      return "Transaction completed"
+    }
+  }
+  const owner = new Owner("goth.eth", 1.51, "deployer")
+  console.log(owner.getAddress())
